@@ -12,7 +12,9 @@ ACCESS_FILE_PATH = 'access.log'
 
 def newLogFileIfNotExist():
     if Path(ACCESS_FILE_PATH).is_file():
-        pass
+        with open(ACCESS_FILE_PATH, 'w') as fp:
+            fp.truncate(0)
+            print('清空了access.log文件')        
     else:
         with open(ACCESS_FILE_PATH, 'w') as fp:
             print('创建了新的access.log文件')        
@@ -31,7 +33,8 @@ if not os.path.exists('log'):
 if os.path.isfile(ACCESS_FILE_NEW_PATH):
     print('access.log文件，今天已经存在')
 else:
-    shutil.move(ACCESS_FILE_PATH, ACCESS_FILE_NEW_PATH)
+    # shutil.move(ACCESS_FILE_PATH, ACCESS_FILE_NEW_PATH)
+    shutil.copy(ACCESS_FILE_PATH, ACCESS_FILE_NEW_PATH)
     newLogFileIfNotExist()
 
 
@@ -48,7 +51,9 @@ print('错误日志文件路径：'+ ACCESS_FILE_ERR_NEW_PATH)
 
 def newErrorLogFileIfNotExist():
     if Path(ACCESS_FILE_ERR_PATH).is_file():
-        pass
+        with open(ACCESS_FILE_ERR_PATH, 'w') as fp:
+            fp.truncate(0)
+            print('清空了nginx_error文件')  
     else:
         with open(ACCESS_FILE_ERR_PATH, 'w') as fp:
             print('创建了新的nginx_error文件')  
@@ -58,5 +63,6 @@ newErrorLogFileIfNotExist()
 if os.path.isfile(ACCESS_FILE_ERR_NEW_PATH):
     print('nginx_error.log文件，今天已经存在')
 else:
-    shutil.move(ACCESS_FILE_ERR_PATH, ACCESS_FILE_ERR_NEW_PATH)
+    # shutil.move(ACCESS_FILE_ERR_PATH, ACCESS_FILE_ERR_NEW_PATH)
+    shutil.copy(ACCESS_FILE_ERR_PATH, ACCESS_FILE_ERR_NEW_PATH)
     newErrorLogFileIfNotExist()
